@@ -8,6 +8,7 @@ const registerUser = async (req, res) => {
         if (!name || !email || !password) {
             return res.status(400).json({
                 data: null,
+                error: true,
                 message: "Please enter all fields",
             });
         }
@@ -15,6 +16,7 @@ const registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(409).json({
                 data: null,
+                error: true,
                 message: "User already exists",
             });
         }
@@ -51,6 +53,7 @@ const loginUser = async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({
                 data: null,
+                error: true,
                 message: "Please enter all fields",
             });
         }
@@ -58,6 +61,7 @@ const loginUser = async (req, res) => {
         if (!existingUser) {
             return res.status(404).json({
                 data: null,
+                error: true,
                 message: "User does not exist",
             });
         }
@@ -66,6 +70,7 @@ const loginUser = async (req, res) => {
         if (!isPasswordCorrect) {
             return res.status(400).json({
                 data: null,
+                error: true,
                 message: "Invalid credentials",
             });
         }
@@ -97,9 +102,9 @@ const loginUser = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const { name, profilePic,bio,address,phone } = req.body;
+        const { name, profilePic, bio, address, phone } = req.body;
         const { _id } = req.user
-        const user = await User.findOneAndUpdate({ _id }, { name, profilePic,bio,address,phone }, { new: true });
+        const user = await User.findOneAndUpdate({ _id }, { name, profilePic, bio, address, phone }, { new: true });
         res.status(200).json({
             data: {
                 _id: user._id,
@@ -123,7 +128,7 @@ const updateProfile = async (req, res) => {
 
 }
 
-const fetchUser= async (req, res) => {
+const fetchUser = async (req, res) => {
     try {
         const { _id } = req.user;
         const user = await User.findOne({ _id })
@@ -137,8 +142,8 @@ const fetchUser= async (req, res) => {
                 address: user.address,
                 phone: user.phone
             },
-            message: "User fetched successfully",   
-        }); 
+            message: "User fetched successfully",
+        });
     }
 
     catch (error) {
