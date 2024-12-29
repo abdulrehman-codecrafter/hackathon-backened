@@ -5,7 +5,15 @@ const User = require("../models/userModel");
 // Get all events
 const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find(); // Retrieve all events from the database
+    const events = await Event.find().populate({
+      path: 'participants',
+      select: 'profilePic name',  
+    })
+    .populate({
+      path: 'createdBy',
+      select: 'profilePic name',  
+    }) 
+
     res.status(200).json({
       data: events,
       message: "Events fetched successfully",
