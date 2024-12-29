@@ -13,6 +13,11 @@ const eventSchema = new Schema({
     required: true,
     trim: true,
   },
+  category: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   image:{
     type: String,
     default: 'https://res.cloudinary.com/deni18m0m/image/upload/v1735469254/socialApp/xqlvtp2wptesbzmkl6lo.jpg',
