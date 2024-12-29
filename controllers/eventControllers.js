@@ -27,6 +27,37 @@ const getAllEvents = async (req, res) => {
   }
 };
 
+const getEventsByUser = async (req, res) => {
+  try {
+    const events = await Event.find({ createdBy: req.user._id }).populate({
+      path: 'participants',
+      select: 'profilePic name',  
+    })
+    .populate({
+      path: 'createdBy',
+      select: 'profilePic name',  
+    }) 
+    if (!events) {
+      return res.status(404).json({
+        data: null,
+        error: true,
+        message: "Events not found",
+      });
+    }
+    res.status(200).json({
+      data: events,
+      message: "Events fetched successfully",
+    });
+  }catch (err) {
+    res.status(500).json({
+      data: null,
+      message: "Failed to fetch events",
+      error: err.message,
+    });
+  } 
+}
+    
+
 // Get a single event by its ID
 const getEventById = async (req, res) => {
   try {
