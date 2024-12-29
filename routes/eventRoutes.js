@@ -1,6 +1,6 @@
 const express = require('express');
 const authVerify = require('../middlewares/auth');
-const { getAllEvents, getEventById, createEvent, updateEvent, deleteEvent, participateInEvent } = require('../controllers/eventControllers');
+const { getAllEvents, getEventById, createEvent, updateEvent, deleteEvent, participateInEvent, getEventsByUser } = require('../controllers/eventControllers');
 const eventRouter = express.Router();
 
 
@@ -22,4 +22,5 @@ eventRouter.delete('/delete/:eventId', authVerify, deleteEvent);
 // Participate in an event (protected route)
 eventRouter.post('/participate/:eventId', authVerify, participateInEvent);
 
+eventRouter.get('/my-events', authVerify, getEventsByUser);
 module.exports = eventRouter;

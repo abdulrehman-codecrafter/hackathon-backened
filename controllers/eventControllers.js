@@ -218,4 +218,5 @@ module.exports = {
   updateEvent,
   deleteEvent,
   participateInEvent,
+  getEventsByUser
 };
